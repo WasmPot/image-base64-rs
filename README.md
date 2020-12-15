@@ -1,17 +1,12 @@
 #image-base64-rs
 
 <p align="left">
-    <a href="https://crates.io/crates/image-base64">
-        <img src="https://img.shields.io/crates/v/image-base64.svg"
+    <a href="https://crates.io/crates/image-base64-wasm">
+        <img src="https://img.shields.io/crates/v/image-base64-wasm.svg"
              alt="crates">
-    </a>
-    <a href="https://travis-ci.org/katsumeshi/image-base64-rs">
-        <img src="https://travis-ci.org/katsumeshi/image-base64-rs.svg?branch=master"
-             alt="travis">
-    </a>
-    
-    
+    </a>    
 </p>
+
 Convert image to base64, and vise versa
 
 ## Compatibility
@@ -28,14 +23,14 @@ To build into wasm, uncomment the target line in `.cargo/config`
 ## Code Example
 
 ```
-extern crate image_base64;
+extern crate image_base64_wasm;
 
 fn main() {
   let base64 = "base64 String";
-  let image = image_base64::from_base64(base64);
+  let image = image_base64_wasm::from_base64(base64);
   
   let image_path = "local image file path"
-  let base64 = image_base64::to_base64(image_path); 
+  let base64 = image_base64_wasm::to_base64(image_path); 
 }
 ```
 
@@ -45,7 +40,7 @@ Add the dependency to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-image-base64 = "0.1"
+image-base64-wasm = "0.1"
 ```
 
 ## License
