@@ -14,6 +14,17 @@
 </p>
 Convert image to base64, and vise versa
 
+## Compatibility
+
+The library is compatible with **wasm**
+
+To build into wasm, uncomment the target line in `.cargo/config`
+
+```
+[build]
+# target = "wasm32-unknown-unknown"
+```
+
 ## Code Example
 
 ```
