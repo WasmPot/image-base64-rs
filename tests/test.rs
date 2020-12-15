@@ -1,17 +1,15 @@
-extern crate rustc_serialize;
 extern crate regex;
-extern crate crypto;
 extern crate image_base64;
+extern crate md5;
 
 use std::fs::File;
 use std::io::Read;
 use std::string::String;
 use std::path::Path;
 use std::io::Write;
-use crypto::md5::Md5;
-use crypto::digest::Digest;
 use std::fs;
 use std::str;
+use md5::Digest;
 
 static FILE_NAME: &'static str = "nyan";
 
@@ -82,8 +80,7 @@ fn validate(file_type : &str) {
     assert_eq!(get_hash("res", file_type), get_hash("output", file_type));
 }
 
-fn get_hash(dir : &str, file_type : &str) -> String {
-    let mut hasher = Md5::new();
+fn get_hash(dir : &str, file_type : &str) -> Digest {
     let mut file = match File::open(&format!("{}/{}.{}", dir, FILE_NAME, file_type)) {
         Err(why) => panic!("couldn't open {}", why),
         Ok(file) => file,
@@ -94,8 +91,7 @@ fn get_hash(dir : &str, file_type : &str) -> String {
         Ok(_) => {},
     }
     let file_arr = vector_as_u8_4_array(file_vec);
-    hasher.input(&file_arr);
-    hasher.result_str()
+    return md5::compute(file_arr);
 }
 
 fn get_file_size(dir : &str, file_type : &str) -> u64 {
