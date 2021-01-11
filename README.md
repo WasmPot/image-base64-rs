@@ -1,4 +1,4 @@
-#image-base64-rs
+# image-base64-wasm
 
 <p align="left">
     <a href="https://crates.io/crates/image-base64-wasm">

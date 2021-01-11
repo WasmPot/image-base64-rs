@@ -14,7 +14,9 @@ pub fn get_file_type(hex: &str) -> &str {
         return "png" 
     } else if Regex::new(r"^47494638").unwrap().is_match(hex) { 
         return "gif"
-    } 
+    } else if Regex::new(r"^00000100").unwrap().is_match(hex) {
+        return "x-icon"
+    }
     panic!("invalid file type")
 }
 

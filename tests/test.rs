@@ -1,6 +1,7 @@
 extern crate regex;
-extern crate image_base64;
 extern crate md5;
+extern crate image_base64_wasm;
+//extern crate image_base64;
 
 use std::fs::File;
 use std::io::Read;
@@ -10,6 +11,7 @@ use std::io::Write;
 use std::fs;
 use std::str;
 use md5::Digest;
+use image_base64_wasm::{to_base64, from_base64};
 
 static FILE_NAME: &'static str = "nyan";
 
@@ -28,6 +30,11 @@ fn png_to_base64() {
     image_to_base64("png");
 }
 
+#[test]
+fn ico_to_base64() {
+    image_to_base64("ico");
+}
+
 fn image_to_base64(file_type : &str) {
     let mut file = match File::open(format!("res/{}_data", file_type)) {
         Err(why) => panic!("couldn't open {}", why),
@@ -38,7 +45,7 @@ fn image_to_base64(file_type : &str) {
         Err(why) => panic!("couldn't read {}", why),
         Ok(_) => {},
     }
-    let base64 = image_base64::to_base64(&format!("res/{}.{}", FILE_NAME, file_type)); 
+    let base64 = to_base64(&format!("res/{}.{}", FILE_NAME, file_type));
     assert_eq!(base64, buffer);
 }
 
@@ -60,6 +67,12 @@ fn base64_to_png() {
     validate("png");
 }
 
+#[test]
+fn base64_to_ico() {
+    base64_to_image("ico");
+    validate("ico");
+}
+
 fn base64_to_image(file_type : &str) {
     let mut original = match File::open(format!("res/{}_data", file_type)) {
         Err(why) => panic!("couldn't open {}", why),
@@ -70,7 +83,7 @@ fn base64_to_image(file_type : &str) {
         Err(why) => panic!("couldn't read {}", why),
         Ok(_) => {},
     }
-    let img = image_base64::from_base64(base64);
+    let img = from_base64(base64);
     let mut output = File::create(&Path::new(&format!("output/{}.{}", FILE_NAME, file_type))).unwrap();
     output.write_all(img.as_slice()).unwrap();
 }
