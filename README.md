@@ -40,7 +40,7 @@ Add the dependency to your `Cargo.toml`:
 
 ```toml
 [dependencies]
-image-base64-wasm = "0.1"
+image-base64-wasm = "0.4.0"
 ```
 
 ## License
