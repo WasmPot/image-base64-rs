@@ -20,13 +20,17 @@ pub fn get_file_type(hex: &str) -> &str {
     panic!("invalid file type")
 }
 
+pub fn vec_to_base64(vec: Vec<u8>) -> String {
+    let base64 = BASE64_MIME.encode(&*vec);
+    let hex = hex::encode(vec);
+    return format!("data:image/{};base64,{}", get_file_type(&hex), base64.replace("\r\n", ""));
+}
+
 pub fn to_base64(path: &str) -> String {
     let mut file = File::open(path).unwrap();
     let mut vec = Vec::new();
     let _ = file.read_to_end(&mut vec);
-    let base64 = BASE64_MIME.encode(&*vec);
-    let hex = hex::encode(vec);
-    return format!("data:image/{};base64,{}", get_file_type(&hex), base64.replace("\r\n", ""));
+    return vec_to_base64(vec);
 }
 
 pub fn from_base64(base64: String) -> Vec<u8> {
