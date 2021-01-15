@@ -20,6 +20,11 @@ pub fn get_file_type(hex: &str) -> &str {
     panic!("invalid file type")
 }
 
+pub fn vec_to_base64_http(vec: Vec<u8>, data_type: &str) -> String {
+    let base64 = BASE64_MIME.encode(&*vec);
+    return format!("data:{};base64,{}", data_type, base64.replace("\r\n", ""));
+}
+
 pub fn vec_to_base64(vec: Vec<u8>) -> String {
     let base64 = BASE64_MIME.encode(&*vec);
     let hex = hex::encode(vec);
